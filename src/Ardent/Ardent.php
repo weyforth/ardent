@@ -931,7 +931,11 @@ abstract class Ardent extends Model {
 		// while it is constructing and executing various queries against it.
 		$builder->setModel($this)->with($this->with);
 
-		return $this->applyGlobalScopes($builder);
+		foreach ($this->getGlobalScopes() as $identifier => $scope) {
+			$builder->withGlobalScope($identifier, $scope);
+		}
+
+		return $builder;
 	}
 
     /**
